@@ -11,7 +11,12 @@ class Verification::ResidenceController < ApplicationController
   def create
     @residence = Verification::Residence.new(residence_params.merge(user: current_user))
     if @residence.save
-      redirect_to verified_user_path, notice: t("verification.residence.create.flash.success")
+      # Setze die Verifikationszeitstempel hier, um SMS und Letter zu überspringen
+      current_user.update!(
+        verified_at: Time.current,
+        confirmed_phone: current_user.unconfirmed_phone # Optional, falls Phone-Verifikation auch übersprungen werden soll
+      )
+      redirect_to account_path, notice: t("verification.residence.create.flash.success")
     else
       render :new
     end

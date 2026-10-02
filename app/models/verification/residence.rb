@@ -97,8 +97,8 @@ class Verification::Residence
 
     def residency_valid?
       census_data.valid? &&
-        census_data.postal_code == postal_code &&
-        census_data.date_of_birth == date_of_birth
+        census_data.postal_code == postal_code 
+        #&& census_data.date_of_birth == date_of_birth
     end
 
     def clean_document_number
